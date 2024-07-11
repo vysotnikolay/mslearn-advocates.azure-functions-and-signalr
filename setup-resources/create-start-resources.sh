@@ -34,12 +34,13 @@ printf "Using subscription: ""$SUBSCRIPTION_NAME""\n"
 RANDOM_STRING=$(openssl rand -hex 5)
 #printf "Using random string: $RANDOM_STRING\n"
 RESOURCE_GROUP_NAME="$USER_NAME-signalr-$RANDOM_STRING"
+LOCATION="centralus"
 
 # Create a resource group
 az group create \
   --subscription "$SUBSCRIPTION_NAME" \
   --name "$RESOURCE_GROUP_NAME" \
-  --location eastus
+  --location $LOCATION
 
 # Set default resource group
 az configure --defaults group="$RESOURCE_GROUP_NAME"
@@ -59,6 +60,7 @@ printf "Creating Storage Account\n"
 az storage account create \
   --subscription "$SUBSCRIPTION_NAME" \
   --name $STORAGE_ACCOUNT_NAME \
+  --location $LOCATION \
   --resource-group $RESOURCE_GROUP_NAME \
   --kind StorageV2 \
   --sku Standard_LRS
